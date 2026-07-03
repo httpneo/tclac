@@ -51,10 +51,10 @@
 ### 3. Konfiguration einfügen
 
 #### Option A: Einfache Konfiguration
-[📄 Sample_conf.yaml](https://github.com/sorz2122/tclac/blob/master/Sample_conf.yaml)
+[📄 Sample_conf.yaml](https://github.com/httpneo/tclac/blob/master/Sample_conf.yaml)
 
 #### Option B: Erweiterte Konfiguration
-[📄 TCL-Conditioner.yaml](https://github.com/sorz2122/tclac/blob/master/TCL-Conditioner.yaml)
+[📄 TCL-Conditioner.yaml](https://github.com/httpneo/tclac/blob/master/TCL-Conditioner.yaml)
 
 📝 **Wichtig:**  
 - WLAN-Daten, Gerätename etc. anpassen  
