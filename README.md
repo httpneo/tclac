@@ -1,6 +1,6 @@
 # 🌀 TCL Air Conditioner Integration for Home Assistant
 
-> 🇩🇪 Übersetzt mit ChatGPT – erfolgreich getestet mit **TCL TAC-12CHDA**  
+> 🇩🇪 Das ist ein Fork von sorz2122 und ich habe es an meine Bedürfnisse angepasst **  
 > Einfaches DIY-Projekt mit ESP32 + USB-Kabel. Keine Cloud nötig.
 
 ---
