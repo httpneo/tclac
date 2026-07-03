@@ -9,7 +9,6 @@
 
 - **ESP32** (z. B. ESP32-C3, WROOM32, NodeMCU)
 - **USB-A-Stecker oder -Kabel**  
-  👉 Ich habe dieses verwendet: [AliExpress-Link](https://www.aliexpress.com/item/1005005776162012.html)
 - **Home Assistant mit ESPHome (ab Version 2023.3.0)**
 
 ---
@@ -54,20 +53,6 @@
 - USB-Kabel anschließen oder OTA (Over-the-Air) verwenden
 
 ---
-
-## ✅ Kompatible Klimaanlagen
-
-Diese Modelle wurden erfolgreich getestet:
-
-- **TCL:** TAC-07CHSA / TAC-09CHSA / TAC-12CHSA / TAC-12CHDA
-- **Daichi:** AIR20AVQ1, AIR25AVQS1R-1, DA35EVQ1-1
-- **Axioma:** ASX09H1 / ASB09H1
-- **Dantex:** RK-12SATI / RK-12SATIE  
-- ...und ähnliche Modelle
-
-⚠️ **Hinweis:**  
-Auch wenn die Modellbezeichnung passt, kann es Unterschiede geben (kein USB-Anschluss, kein UART auf der Platine etc.).
-
 
 ## 🔧 Erweiterte Konfiguration per Remote Package
 
