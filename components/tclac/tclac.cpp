@@ -253,41 +253,14 @@ void tclacClimate::control(const ClimateCall &call) {
 	
 void tclacClimate::takeControl() {
 	
-	//dataTX[7]  = 0b00000000;
-	//dataTX[8]  = 0b00000000;
-	//dataTX[9]  = 0b00000000;
-	//dataTX[10] = 0b00000000;
-	//dataTX[11] = 0b00000000;
-	//dataTX[19] = 0b00000000;
-	//dataTX[32] = 0b00000000;
-	//dataTX[33] = 0b00000000;
-
-	// Fix Start
-	dataTX[7]  = display ? 0b00000000 : 0b01000000;
-    dataTX[12] = display ? 0b00000000 : 0b01000000;
-    
-    // 2. Modus-Byte (Byte 8) nicht mehr nullen, sondern den echten Zustand mitsenden!
-    if (this->mode == climate::CLIMATE_MODE_COOL) {
-        dataTX[8] = 0b00000001;
-    } else if (this->mode == climate::CLIMATE_MODE_HEAT) {
-        dataTX[8] = 0b00000010;
-    } else if (this->mode == climate::CLIMATE_MODE_DRY) {
-        dataTX[8] = 0b00000011;
-    } else if (this->mode == climate::CLIMATE_MODE_FAN_ONLY) {
-        dataTX[8] = 0b00000100;
-    } else {
-        dataTX[8] = 0b00000000; // Auto-Modus
-    }
-    
-    // Die restlichen Bytes werden zurückgesetzt
-    dataTX[8]  = dataTX[8]; // Behält den eben gesetzten Modus
-    dataTX[9]  = 0b00000000;
-    dataTX[10] = 0b00000000;
-    dataTX[11] = 0b00000000;
-    dataTX[19] = 0b00000000;
-    dataTX[32] = 0b00000000;
-    dataTX[33] = 0b00000000;
-	// Fix Ende
+	dataTX[7]  = 0b00000000;
+	dataTX[8]  = 0b00000000;
+	dataTX[9]  = 0b00000000;
+	dataTX[10] = 0b00000000;
+	dataTX[11] = 0b00000000;
+	dataTX[19] = 0b00000000;
+	dataTX[32] = 0b00000000;
+	dataTX[33] = 0b00000000;
 	
 	if (is_call_control != true){
 		ESP_LOGD("TCL", "Get MODE from AC for force config");
@@ -312,12 +285,20 @@ void tclacClimate::takeControl() {
 	
 	// ВНИМАНИЕ! При выключении дисплея кондиционер сам принудительно переходит в автоматический режим!
 	
+	//if ((display_status_) && (switch_climate_mode != climate::CLIMATE_MODE_OFF)){
+	//	ESP_LOGD("TCL", "Dispaly turn ON");
+	//	dataTX[7] += 0b01000000;
+	//} else {
+	//	ESP_LOGD("TCL", "Dispaly turn OFF");
+	//	dataTX[7] += 0b00000000;
+	//}
+
 	if ((display_status_) && (switch_climate_mode != climate::CLIMATE_MODE_OFF)){
 		ESP_LOGD("TCL", "Dispaly turn ON");
-		dataTX[7] += 0b01000000;
+		dataTX[7] = 0b01000000;  // Festes Gleichheitszeichen statt +=
 	} else {
 		ESP_LOGD("TCL", "Dispaly turn OFF");
-		dataTX[7] += 0b00000000;
+		dataTX[7] = 0b00000000;  // Setzt das Byte sauber auf 0 zurück
 	}
 		
 	// Настраиваем режим работы кондиционера
