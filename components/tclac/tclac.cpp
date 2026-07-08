@@ -253,7 +253,8 @@ void tclacClimate::control(const ClimateCall &call) {
 	
 void tclacClimate::takeControl() {
 	
-	dataTX[7]  = 0b00000000;
+	// dataTX[7]  = 0b00000000;
+	dataTX[7]  = display ? 0b01000000 : 0b00000000;
 	dataTX[8]  = 0b00000000;
 	dataTX[9]  = 0b00000000;
 	dataTX[10] = 0b00000000;
