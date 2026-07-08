@@ -285,20 +285,12 @@ void tclacClimate::takeControl() {
 	
 	// ВНИМАНИЕ! При выключении дисплея кондиционер сам принудительно переходит в автоматический режим!
 	
-	//if ((display_status_) && (switch_climate_mode != climate::CLIMATE_MODE_OFF)){
-	//	ESP_LOGD("TCL", "Dispaly turn ON");
-	//	dataTX[7] += 0b01000000;
-	//} else {
-	//	ESP_LOGD("TCL", "Dispaly turn OFF");
-	//	dataTX[7] += 0b00000000;
-	//}
-
 	if ((display_status_) && (switch_climate_mode != climate::CLIMATE_MODE_OFF)){
-		ESP_LOGD("TCL", "Dispaly turn ON");
-		dataTX[7] = 0b01000000;  // Festes Gleichheitszeichen statt +=
+		ESP_LOGD("TCL", "Display turn ON");
+		dataTX[7] += 0b01000000;
 	} else {
-		ESP_LOGD("TCL", "Dispaly turn OFF");
-		dataTX[7] = 0b00000000;  // Setzt das Byte sauber auf 0 zurück
+		ESP_LOGD("TCL", "Display turn OFF");
+		dataTX[7] += 0b00000000;
 	}
 		
 	// Настраиваем режим работы кондиционера
