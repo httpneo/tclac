@@ -6,7 +6,7 @@
 namespace esphome {
 namespace tclac {
 
-// Aktionsvorlage: Einstellung der vertikalen Dämpferarretierung ändern
+// Action template: change vertical flap fixation
 template<typename... Ts> class VerticalAirflowAction : public Action<Ts...> {
  public:
   VerticalAirflowAction(tclacClimate *parent) : parent_(parent) {}
@@ -17,7 +17,7 @@ template<typename... Ts> class VerticalAirflowAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Ändern der horizontalen Verriegelung der Klappen
+// Action template: change horizontal flaps fixation
 template<typename... Ts> class HorizontalAirflowAction : public Action<Ts...> {
  public:
   HorizontalAirflowAction(tclacClimate *parent) : parent_(parent) {}
@@ -28,7 +28,7 @@ template<typename... Ts> class HorizontalAirflowAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Modus für vertikale Klappenschwingung ändern
+// Action template: change vertical flap swing mode
 template<typename... Ts> class VerticalSwingDirectionAction : public Action<Ts...> {
  public:
   VerticalSwingDirectionAction(tclacClimate *parent) : parent_(parent) {}
@@ -39,7 +39,7 @@ template<typename... Ts> class VerticalSwingDirectionAction : public Action<Ts..
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Horizontalen Lamellenschwenkmodus ändern
+// Action template: change horizontal flaps swing mode
 template<typename... Ts> class HorizontalSwingDirectionAction : public Action<Ts...> {
  public:
   HorizontalSwingDirectionAction(tclacClimate *parent) : parent_(parent) {}
@@ -50,7 +50,7 @@ template<typename... Ts> class HorizontalSwingDirectionAction : public Action<Ts
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Display einschalten
+// Action template: turn on display
 template<typename... Ts> class DisplayOnAction : public Action<Ts...> {
  public:
   DisplayOnAction(tclacClimate *parent) : parent_(parent) {}
@@ -60,7 +60,7 @@ template<typename... Ts> class DisplayOnAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Display ausschalten
+// Action template: turn off display
 template<typename... Ts> class DisplayOffAction : public Action<Ts...> {
  public:
   DisplayOffAction(tclacClimate *parent) : parent_(parent) {}
@@ -70,7 +70,7 @@ template<typename... Ts> class DisplayOffAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Beeper einschalten
+// Action template: turn on beeper
 template<typename... Ts> class BeeperOnAction : public Action<Ts...> {
  public:
   BeeperOnAction(tclacClimate *parent) : parent_(parent) {}
@@ -80,7 +80,7 @@ template<typename... Ts> class BeeperOnAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Beeper ausschalten
+// Action template: turn off beeper
 template<typename... Ts> class BeeperOffAction : public Action<Ts...> {
  public:
   BeeperOffAction(tclacClimate *parent) : parent_(parent) {}
@@ -90,7 +90,7 @@ template<typename... Ts> class BeeperOffAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Modulindikator einschalten
+// Action template: turn on module indicator
 template<typename... Ts> class ModuleDisplayOnAction : public Action<Ts...> {
  public:
   ModuleDisplayOnAction(tclacClimate *parent) : parent_(parent) {}
@@ -100,7 +100,7 @@ template<typename... Ts> class ModuleDisplayOnAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Modulanzeige ausschalten
+// Action template: turn off module indicator
 template<typename... Ts> class ModuleDisplayOffAction : public Action<Ts...> {
  public:
   ModuleDisplayOffAction(tclacClimate *parent) : parent_(parent) {}
@@ -110,7 +110,7 @@ template<typename... Ts> class ModuleDisplayOffAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Aktivierung der Durchsetzung von Einstellungen (Force-Config)
+// Action template: turn on force apply settings
 template<typename... Ts> class ForceOnAction : public Action<Ts...> {
  public:
   ForceOnAction(tclacClimate *parent) : parent_(parent) {}
@@ -120,7 +120,7 @@ template<typename... Ts> class ForceOnAction : public Action<Ts...> {
   tclacClimate *parent_;
 };
 
-// Aktionsvorlage: Erzwingen der Anwendung von Einstellungen deaktivieren (Force-Config)
+// Action template: turn off force apply settings
 template<typename... Ts> class ForceOffAction : public Action<Ts...> {
  public:
   ForceOffAction(tclacClimate *parent) : parent_(parent) {}
