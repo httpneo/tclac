@@ -11,7 +11,6 @@ esp32:
       sram1_as_iram: true
 
 logger:
-  level: DEBUG
 
 wifi:
   ssid: !secret wifi_ssid
