@@ -2,7 +2,7 @@
 * Create by Miguel Ángel López on 20/07/19
 * and modify by xaxexa
 * Refactoring & component making:
-* Соловей с паяльником 15.03.2024
+* Nightingale with soldering iron 15.03.2024
 **/
 
 #ifndef TCL_ESP_TCL_H
@@ -12,6 +12,10 @@
 #include "esphome/core/defines.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/climate/climate.h"
+
+// FreeRTOS Header for ESP-IDF compatibility
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 namespace esphome {
 namespace tclac {
@@ -30,15 +34,15 @@ namespace tclac {
 #define FAN_SPEED_POS	8
 #define FAN_QUIET_POS	33
 
-#define FAN_AUTO		0b10000000	//auto
-#define FAN_QUIET		0x80		//silent
-#define FAN_LOW			0b10010000	//	|
-#define FAN_MIDDLE		0b11000000	//	||
-#define FAN_MEDIUM		0b10100000	//	|||
-#define FAN_HIGH		0b11010000	//	||||
-#define FAN_FOCUS		0b10110000	//	|||||
-#define FAN_DIFFUSE		0b10000000	//	POWER [7]
-#define FAN_SPEED_MASK	0b11110000	//FAN SPEED MASK
+#define FAN_AUTO		0b10000000	// auto
+#define FAN_QUIET		0x80		// silent
+#define FAN_LOW			0b10010000	//  |
+#define FAN_MIDDLE		0b11000000	//  ||
+#define FAN_MEDIUM		0b10100000	//  |||
+#define FAN_HIGH		0b11010000	//  ||||
+#define FAN_FOCUS		0b10110000	//  |||||
+#define FAN_DIFFUSE		0b10000000	// POWER [7]
+#define FAN_SPEED_MASK	0b11110000	// FAN SPEED MASK
 
 #define SWING_POS			10
 #define SWING_OFF			0b00000000
@@ -85,14 +89,14 @@ enum class AirflowHorizontalDirection : uint8_t {
 class tclacClimate : public climate::Climate, public esphome::uart::UARTDevice, public PollingComponent {
 
 	private:
-		uint8_t checksum;
-		// dataTX с управлением состоит из 38 байт
-		uint8_t dataTX[38];
-		// А dataRX по прежнему из 61 байта
-		uint8_t dataRX[61];
-		// Команда запроса состояния
-		uint8_t poll[8] = {0xBB,0x00,0x01,0x04,0x02,0x01,0x00,0xBD};
-		// Инициализация и начальное наполнение переменных состоянй переключателей
+		byte checksum;
+		// dataTX with control consists of 38 bytes
+		byte dataTX[38];
+		// dataRX is still 61 bytes
+		byte dataRX[61];
+		// State poll command
+		byte poll[8] = {0xBB,0x00,0x01,0x04,0x02,0x01,0x00,0xBD};
+		// Initialization and initial filling of switch state variables
 		bool beeper_status_;
 		bool display_status_;
 		bool force_mode_status_;
@@ -104,9 +108,9 @@ class tclacClimate : public climate::Climate, public esphome::uart::UARTDevice, 
 		int target_temperature_set = 0;
 		uint8_t switch_climate_mode = 0;
 		bool allow_take_control = false;
-		
+
 		esphome::climate::ClimateTraits traits_;
-		
+
 	public:
 
 		tclacClimate() : PollingComponent(5 * 1000) {
@@ -119,37 +123,37 @@ class tclacClimate : public climate::Climate, public esphome::uart::UARTDevice, 
 		void setup() override;
 		void update() override;
 		void set_beeper_state(bool state);
-		void set_display_state(bool disp_state);
+		void set_display_state(bool state);
 		void dataShow(bool flow, bool shine);
-		void set_force_mode_state(bool f_state);
+		void set_force_mode_state(bool state);
 		void set_rx_led_pin(GPIOPin *rx_led_pin);
 		void set_tx_led_pin(GPIOPin *tx_led_pin);
-		void sendData(uint8_t * message, uint8_t size);
-		void set_module_display_state(bool d_state);
-		static String getHex(uint8_t *message, uint8_t size);
-		static uint8_t getChecksum(const uint8_t * message, size_t size);
-		void set_vertical_airflow(AirflowVerticalDirection v_airflow);
-		void set_horizontal_airflow(AirflowHorizontalDirection h_airflow);
-		void set_vertical_swing_direction(VerticalSwingDirection vs_direction);
-		void set_horizontal_swing_direction(HorizontalSwingDirection hs_direction);
-		void set_supported_presets(climate::ClimatePresetMask presets);
-		void set_supported_modes(climate::ClimateModeMask modes);
-		void set_supported_fan_modes(climate::ClimateFanModeMask fan_modes);
-		void set_supported_swing_modes(climate::ClimateSwingModeMask swing_modes);
-		
+		void sendData(byte * message, byte size);
+		void set_module_display_state(bool state);
+		static String getHex(byte *message, byte size);
+		void control(const ClimateCall &call) override;
+		static byte getChecksum(const byte * message, size_t size);
+		void set_vertical_airflow(AirflowVerticalDirection direction);
+		void set_horizontal_airflow(AirflowHorizontalDirection direction);
+		void set_vertical_swing_direction(VerticalSwingDirection direction);
+		void set_horizontal_swing_direction(HorizontalSwingDirection direction);
+		void set_supported_presets(const std::set<climate::ClimatePreset> &presets);
+		void set_supported_modes(const std::set<esphome::climate::ClimateMode> &modes);
+		void set_supported_fan_modes(const std::set<esphome::climate::ClimateFanMode> &modes);
+		void set_supported_swing_modes(const std::set<esphome::climate::ClimateSwingMode> &modes);
+
 	protected:
 		GPIOPin *rx_led_pin_;
 		GPIOPin *tx_led_pin_;
 		ClimateTraits traits() override;
-		climate::ClimateModeMask supported_modes_{};
+		std::set<ClimateMode> supported_modes_{};
+		std::set<ClimatePreset> supported_presets_{};
 		AirflowVerticalDirection vertical_direction_;
-		climate::ClimatePresetMask supported_presets_{};
+		std::set<ClimateFanMode> supported_fan_modes_{};
 		AirflowHorizontalDirection horizontal_direction_;
 		VerticalSwingDirection vertical_swing_direction_;
-		climate::ClimateFanModeMask supported_fan_modes_{};
+		std::set<ClimateSwingMode> supported_swing_modes_{};
 		HorizontalSwingDirection horizontal_swing_direction_;
-		climate::ClimateSwingModeMask supported_swing_modes_{};
-		void control(const climate::ClimateCall &call) override;
 };
 }
 }
